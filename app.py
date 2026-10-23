@@ -13,7 +13,8 @@ st.write(
 )
 
 PROGRAMS = {
-    1: ("Customer Segmentation using K-Means Clustering", '''import pandas as pd
+    1: ("Customer Segmentation using K-Means Clustering", '''
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
@@ -35,9 +36,10 @@ plt.show()
 
 print(df.groupby("Cluster")[[
     "Annual Income (k$)", "Spending Score (1-100)"
-]].mean())'''),
+]].mean())
 
-    2: ("Sentiment Analysis using NLP", '''import pandas as pd
+2. Sentiment Analysis
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -63,9 +65,10 @@ print(classification_report(y_test, pred))
 
 print(model.predict(vectorizer.transform([
     "This product is excellent and useful"
-])))'''),
+])
 
-    3: ("Fraud Detection in Credit Card Transactions", '''import pandas as pd
+3. Fraud Detection in Credit Card Transactions
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
@@ -87,9 +90,11 @@ model.fit(X_train, y_train)
 pred = model.predict(X_test)
 
 print(confusion_matrix(y_test, pred))
-print(classification_report(y_test, pred, digits=4))'''),
+print(classification_report(y_test, pred, digits=4))
 
-    5: ("Stock Price Prediction using Pandas and NumPy", '''import pandas as pd
+5. Stock Price Prediction using Pandas and NumPy
+        
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -110,9 +115,10 @@ plt.xlabel("Date")
 plt.ylabel("Close Price")
 plt.title("Stock Price Analysis")
 plt.legend()
-plt.show()'''),
+plt.show()
 
-    6: ("Customer Churn Prediction using Decision Trees", '''import pandas as pd
+6. Customer Churn Prediction 
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
@@ -138,9 +144,10 @@ plot_tree(
     model, feature_names=X.columns,
     class_names=True, filled=False, max_depth=3
 )
-plt.show()'''),
+plt.show()
 
-    7: ("COVID-19 Data Visualization using Seaborn", '''import pandas as pd
+    7: COVID-19 Data Visualization using Seaborn
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -156,9 +163,10 @@ plt.xlabel("Date")
 plt.ylabel("New Cases (7-day average)")
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()'''),
+plt.show()
 
-    8: ("Sales Dashboard using Plotly and Dash", '''from dash import Dash, dcc, html
+    8:Sales Dashboard using Plotly and Dash
+ from dash import Dash, dcc, html
 import pandas as pd
 import plotly.express as px
 
@@ -183,9 +191,10 @@ app.layout = html.Div([
 ])
 
 if __name__ == "__main__":
-    app.run(debug=True)'''),
+    app.run(debug=True)
 
-    9: ("IoT Sensor Data Visualization using Streamlit", '''import streamlit as st
+9: IoT Sensor Data Visualization using Streamlit
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 
@@ -204,9 +213,10 @@ fig = px.line(
 )
 
 st.plotly_chart(fig, use_container_width=True)
-st.dataframe(df.tail(20))'''),
+st.dataframe(df.tail(20))
 
-    10: ("Customer Churn Analysis", '''import pandas as pd
+10:Customer Churn Analysis
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -226,9 +236,10 @@ plt.show()
 
 print(pd.crosstab(
     df["Complains"], df["Churn"], normalize="index"
-))'''),
+))
 
-    11: ("Marketing Campaign Performance Analysis", '''import pandas as pd
+11: Marketing Campaign Performance Analysis
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -251,9 +262,11 @@ plt.ylabel("Response Rate")
 plt.xlabel("Contact Method")
 plt.title("Marketing Campaign Response by Contact Method")
 plt.xticks(rotation=20)
-plt.show()'''),
+plt.show()
 
-    12: ("Weather Pattern Visualization using Matplotlib", '''import pandas as pd
+12: Weather Pattern Visualization using Matplotlib
+
+import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("weather.csv", parse_dates=["Date"])
@@ -276,34 +289,3 @@ plt.show()''')
 }
 
 # Display every program on the same page
-for number, (title, code) in PROGRAMS.items():
-    st.divider()
-    st.header(f"Program {number}: {title}")
-    st.code(code, language="python", line_numbers=True)
-
-    st.download_button(
-        label=f"⬇️ Download Program {number}",
-        data=code,
-        file_name=f"program_{number}.py",
-        mime="text/x-python",
-        key=f"download_{number}"
-    )
-
-# Download the entire collection as one Python file
-all_programs = "\n\n".join(
-    f'# {"=" * 55}\n'
-    f'# Program {number}: {title}\n'
-    f'# {"=" * 55}\n\n{code}'
-    for number, (title, code) in PROGRAMS.items()
-)
-
-st.divider()
-st.header("📦 Download Complete Collection")
-
-st.download_button(
-    label="⬇️ Download All Programs",
-    data=all_programs,
-    file_name="open_source_data_analytics_lab.py",
-    mime="text/x-python",
-    key="download_all"
-)
