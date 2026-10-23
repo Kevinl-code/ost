@@ -689,8 +689,3 @@ st.caption(
     "COVID-19 visualization requires an internet connection to retrieve "
     "the dataset. Dash and Streamlit programs run as separate applications."
 )
-PYTHON
-
-python -m pip install streamlit pandas numpy matplotlib seaborn scikit-learn plotly dash
-
-python -m streamlit run app.pyw
