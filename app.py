@@ -1,4 +1,4 @@
-cat > app.py <<'PYTHON'
+
 import streamlit as st
 import zipfile
 import io
