@@ -29,7 +29,7 @@ plt.show()
 print(df.groupby("Cluster")[[
     "Annual Income (k$)",
     "Spending Score (1-100)"
-]].mean())"""),
+]].mean())""")
     2: ('Sentiment Analysis using NLP', """import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -60,7 +60,7 @@ print(classification_report(y_test, pred))
 
 print(model.predict(vectorizer.transform([
     "This product is excellent and useful"
-])))"""),
+])))""")
     3: ('Fraud Detection in Credit Card Transactions', """import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -86,7 +86,7 @@ model.fit(X_train, y_train)
 pred = model.predict(X_test)
 
 print(confusion_matrix(y_test, pred))
-print(classification_report(y_test, pred, digits=4))"""),
+print(classification_report(y_test, pred, digits=4))""")
     5: ('Stock Price Prediction using Pandas and NumPy', """import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -114,7 +114,7 @@ plt.xlabel("Date")
 plt.ylabel("Close Price")
 plt.title("Stock Price Analysis")
 plt.legend()
-plt.show()"""),
+plt.show()""")
     6: ('Customer Churn Prediction using Decision Trees', """import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
@@ -154,7 +154,7 @@ plot_tree(
     max_depth=3
 )
 
-plt.show()"""),
+plt.show()""")
     7: ('COVID-19 Data Visualization using Seaborn', """import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -180,7 +180,7 @@ plt.xlabel("Date")
 plt.ylabel("New Cases (7-day average)")
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()"""),
+plt.show()""")
     8: ('Sales Dashboard using Plotly and Dash', """from dash import Dash, dcc, html
 import pandas as pd
 import plotly.express as px
@@ -220,7 +220,7 @@ app.layout = html.Div([
 ])
 
 if __name__ == "__main__":
-    app.run(debug=True)"""),
+    app.run(debug=True)""")
     9: ('IoT Sensor Data Visualization using Streamlit', """import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -248,7 +248,7 @@ fig = px.line(
 
 st.plotly_chart(fig, use_container_width=True)
 
-st.dataframe(df.tail(20))"""),
+st.dataframe(df.tail(20))""")
     10: ('Customer Churn Analysis', """import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -278,7 +278,7 @@ print(
         df["Churn"],
         normalize="index"
     )
-)"""),
+)""")
     11: ('Marketing Campaign Performance Analysis', """import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -307,7 +307,7 @@ plt.ylabel("Response Rate")
 plt.xlabel("Contact Method")
 plt.title("Marketing Campaign Response by Contact Method")
 plt.xticks(rotation=20)
-plt.show()"""),
+plt.show()""")
     12: ('Weather Pattern Visualization using Matplotlib', """import pandas as pd
 import matplotlib.pyplot as plt
 
