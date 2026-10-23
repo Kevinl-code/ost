@@ -1,9 +1,2 @@
-streamlit
-pandas
-numpy
-matplotlib
-scikit-learn
-seaborn
-plotly
-dash
-Pillow
+streamlit>=1.36
+pandas>=2.0
