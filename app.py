@@ -1,17 +1,25 @@
+cat > app.py <<'PY'
 import streamlit as st
 
-st.set_page_config(page_title="Open Source Data Analytics Lab", page_icon="📊", layout="wide")
+st.set_page_config(
+    page_title="Open Source Data Analytics Lab",
+    page_icon="📊",
+    layout="wide"
+)
+
 st.title("📊 Open Source Data Analytics Lab")
-st.write("Browse programs by title, view syntax-highlighted Python code, and download individual programs or the complete collection.")
+st.write(
+    "Browse all Python programs by title, view syntax-highlighted code, "
+    "and download individual programs or the complete collection."
+)
 
 PROGRAMS = {
-    1: ('Customer Segmentation using K-Means Clustering', """import pandas as pd
+    1: ("Customer Segmentation using K-Means Clustering", '''import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
 df = pd.read_csv("Mall_Customers.csv")
-
 X = df[["Annual Income (k$)", "Spending Score (1-100)"]]
 
 scaler = StandardScaler()
@@ -27,10 +35,10 @@ plt.title("Customer Segmentation using K-Means")
 plt.show()
 
 print(df.groupby("Cluster")[[
-    "Annual Income (k$)",
-    "Spending Score (1-100)"
-]].mean())""")
-    2: ('Sentiment Analysis using NLP', """import pandas as pd
+    "Annual Income (k$)", "Spending Score (1-100)"
+]].mean())'''),
+
+    2: ("Sentiment Analysis using NLP", '''import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -39,11 +47,8 @@ from sklearn.metrics import accuracy_score, classification_report
 df = pd.read_csv("sentiment.csv")
 
 X_train, X_test, y_train, y_test = train_test_split(
-    df["text"],
-    df["sentiment"],
-    test_size=0.2,
-    random_state=42,
-    stratify=df["sentiment"]
+    df["text"], df["sentiment"], test_size=0.2,
+    random_state=42, stratify=df["sentiment"]
 )
 
 vectorizer = TfidfVectorizer(stop_words="english")
@@ -52,7 +57,6 @@ Xte = vectorizer.transform(X_test)
 
 model = LogisticRegression(max_iter=1000)
 model.fit(Xtr, y_train)
-
 pred = model.predict(Xte)
 
 print("Accuracy:", accuracy_score(y_test, pred))
@@ -60,14 +64,14 @@ print(classification_report(y_test, pred))
 
 print(model.predict(vectorizer.transform([
     "This product is excellent and useful"
-])))""")
-    3: ('Fraud Detection in Credit Card Transactions', """import pandas as pd
+])))'''),
+
+    3: ("Fraud Detection in Credit Card Transactions", '''import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 
 df = pd.read_csv("creditcard.csv")
-
 X = df.drop("Class", axis=1)
 y = df["Class"]
 
@@ -76,18 +80,17 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 model = RandomForestClassifier(
-    n_estimators=100,
-    random_state=42,
+    n_estimators=100, random_state=42,
     class_weight="balanced"
 )
 
 model.fit(X_train, y_train)
-
 pred = model.predict(X_test)
 
 print(confusion_matrix(y_test, pred))
-print(classification_report(y_test, pred, digits=4))""")
-    5: ('Stock Price Prediction using Pandas and NumPy', """import pandas as pd
+print(classification_report(y_test, pred, digits=4))'''),
+
+    5: ("Stock Price Prediction using Pandas and NumPy", '''import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -100,117 +103,78 @@ df["Prediction"] = df["MA7"].shift(1)
 mae = np.mean(
     np.abs(df["Close"] - df["Prediction"]).dropna()
 )
-
 print("Mean Absolute Error:", round(mae, 3))
 
 plt.plot(df["Date"], df["Close"], label="Actual")
-plt.plot(
-    df["Date"],
-    df["Prediction"],
-    label="7-day MA Prediction"
-)
-
+plt.plot(df["Date"], df["Prediction"], label="7-day MA Prediction")
 plt.xlabel("Date")
 plt.ylabel("Close Price")
 plt.title("Stock Price Analysis")
 plt.legend()
-plt.show()""")
-    6: ('Customer Churn Prediction using Decision Trees', """import pandas as pd
+plt.show()'''),
+
+    6: ("Customer Churn Prediction using Decision Trees", '''import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import accuracy_score, classification_report
-import matplotlib.pyplot as plt
 
 df = pd.read_csv("Customer Churn.csv")
-
-X = df.drop(columns=["Churn"])
+X = pd.get_dummies(df.drop(columns=["Churn"]), drop_first=True)
 y = df["Churn"]
-
-X = pd.get_dummies(X, drop_first=True)
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-model = DecisionTreeClassifier(
-    max_depth=5,
-    random_state=42
-)
-
+model = DecisionTreeClassifier(max_depth=5, random_state=42)
 model.fit(X_train, y_train)
-
 pred = model.predict(X_test)
 
 print("Accuracy:", accuracy_score(y_test, pred))
 print(classification_report(y_test, pred))
 
 plt.figure(figsize=(16, 8))
-
 plot_tree(
-    model,
-    feature_names=X.columns,
-    class_names=True,
-    filled=False,
-    max_depth=3
+    model, feature_names=X.columns,
+    class_names=True, filled=False, max_depth=3
 )
+plt.show()'''),
 
-plt.show()""")
-    7: ('COVID-19 Data Visualization using Seaborn', """import pandas as pd
+    7: ("COVID-19 Data Visualization using Seaborn", '''import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 url = "https://covid.ourworldindata.org/data/owid-covid-data.csv"
-
 df = pd.read_csv(url, parse_dates=["date"])
 
 country = df[df["location"] == "India"].copy()
+country["new_cases_7d"] = country["new_cases"].rolling(7).mean()
 
-country["new_cases_7d"] = (
-    country["new_cases"].rolling(7).mean()
-)
-
-sns.lineplot(
-    data=country,
-    x="date",
-    y="new_cases_7d"
-)
-
+sns.lineplot(data=country, x="date", y="new_cases_7d")
 plt.title("COVID-19 7-Day Average New Cases - India")
 plt.xlabel("Date")
 plt.ylabel("New Cases (7-day average)")
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()""")
-    8: ('Sales Dashboard using Plotly and Dash', """from dash import Dash, dcc, html
+plt.show()'''),
+
+    8: ("Sales Dashboard using Plotly and Dash", '''from dash import Dash, dcc, html
 import pandas as pd
 import plotly.express as px
 
-df = pd.read_csv(
-    "Online_Retail.csv",
-    encoding="ISO-8859-1"
-)
-
-df = df.dropna(
-    subset=["InvoiceDate", "Quantity", "UnitPrice"]
-)
+df = pd.read_csv("Online_Retail.csv", encoding="ISO-8859-1")
+df = df.dropna(subset=["InvoiceDate", "Quantity", "UnitPrice"])
 
 df["InvoiceDate"] = pd.to_datetime(df["InvoiceDate"])
 df["Sales"] = df["Quantity"] * df["UnitPrice"]
 
 monthly = (
     df.set_index("InvoiceDate")["Sales"]
-    .resample("ME")
-    .sum()
-    .reset_index()
+    .resample("ME").sum().reset_index()
 )
 
-fig = px.line(
-    monthly,
-    x="InvoiceDate",
-    y="Sales",
-    title="Monthly Sales"
-)
-
+fig = px.line(monthly, x="InvoiceDate", y="Sales", title="Monthly Sales")
 app = Dash(__name__)
 
 app.layout = html.Div([
@@ -220,36 +184,30 @@ app.layout = html.Div([
 ])
 
 if __name__ == "__main__":
-    app.run(debug=True)""")
-    9: ('IoT Sensor Data Visualization using Streamlit', """import streamlit as st
+    app.run(debug=True)'''),
+
+    9: ("IoT Sensor Data Visualization using Streamlit", '''import streamlit as st
 import pandas as pd
 import plotly.express as px
 
 st.title("IoT Sensor Monitoring Dashboard")
 
-df = pd.read_csv(
-    "sensor_data.csv",
-    parse_dates=["timestamp"]
-)
-
+df = pd.read_csv("sensor_data.csv", parse_dates=["timestamp"])
 st.write(df.describe())
 
 metric = st.selectbox(
-    "Select sensor",
-    ["temperature", "humidity", "pressure"]
+    "Select sensor", ["temperature", "humidity", "pressure"]
 )
 
 fig = px.line(
-    df,
-    x="timestamp",
-    y=metric,
+    df, x="timestamp", y=metric,
     title=f"{metric.title()} over Time"
 )
 
 st.plotly_chart(fig, use_container_width=True)
+st.dataframe(df.tail(20))'''),
 
-st.dataframe(df.tail(20))""")
-    10: ('Customer Churn Analysis', """import pandas as pd
+    10: ("Customer Churn Analysis", '''import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -263,83 +221,90 @@ sns.countplot(data=df, x="Churn")
 plt.title("Churn Distribution")
 plt.show()
 
-sns.boxplot(
-    data=df,
-    x="Churn",
-    y="Customer Value"
-)
-
+sns.boxplot(data=df, x="Churn", y="Customer Value")
 plt.title("Customer Value by Churn Status")
 plt.show()
 
-print(
-    pd.crosstab(
-        df["Complains"],
-        df["Churn"],
-        normalize="index"
-    )
-)""")
-    11: ('Marketing Campaign Performance Analysis', """import pandas as pd
+print(pd.crosstab(
+    df["Complains"], df["Churn"], normalize="index"
+))'''),
+
+    11: ("Marketing Campaign Performance Analysis", '''import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("bank.csv", sep=";")
-
 df["response"] = (df["y"] == "yes").astype(int)
 
 print(
     "Overall response rate:",
-    round(df["response"].mean() * 100, 2),
-    "%"
+    round(df["response"].mean() * 100, 2), "%"
 )
 
 rate = (
     df.groupby("contact")["response"]
-    .mean()
-    .sort_values(ascending=False)
+    .mean().sort_values(ascending=False)
 )
 
 print((rate * 100).round(2))
-
 sns.barplot(x=rate.index, y=rate.values)
-
 plt.ylabel("Response Rate")
 plt.xlabel("Contact Method")
 plt.title("Marketing Campaign Response by Contact Method")
 plt.xticks(rotation=20)
-plt.show()""")
-    12: ('Weather Pattern Visualization using Matplotlib', """import pandas as pd
+plt.show()'''),
+
+    12: ("Weather Pattern Visualization using Matplotlib", '''import pandas as pd
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("weather.csv", parse_dates=["Date"])
 df = df.sort_values("Date")
 
 fig, ax1 = plt.subplots(figsize=(10, 5))
-
-ax1.plot(
-    df["Date"],
-    df["Temperature"],
-    label="Temperature"
-)
-
+ax1.plot(df["Date"], df["Temperature"], label="Temperature")
 ax1.set_xlabel("Date")
 ax1.set_ylabel("Temperature")
 ax1.grid(True)
 
 ax2 = ax1.twinx()
-
-ax2.bar(
-    df["Date"],
-    df["Rainfall"],
-    alpha=0.25,
-    label="Rainfall"
-)
-
+ax2.bar(df["Date"], df["Rainfall"], alpha=0.25, label="Rainfall")
 ax2.set_ylabel("Rainfall")
 
 plt.title("Weather Pattern Visualization")
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()"""),
-
+plt.show()''')
 }
+
+# Display every program on the same page
+for number, (title, code) in PROGRAMS.items():
+    st.divider()
+    st.header(f"Program {number}: {title}")
+    st.code(code, language="python", line_numbers=True)
+
+    st.download_button(
+        label=f"⬇️ Download Program {number}",
+        data=code,
+        file_name=f"program_{number}.py",
+        mime="text/x-python",
+        key=f"download_{number}"
+    )
+
+# Download the entire collection as one Python file
+all_programs = "\n\n".join(
+    f'# {"=" * 55}\n'
+    f'# Program {number}: {title}\n'
+    f'# {"=" * 55}\n\n{code}'
+    for number, (title, code) in PROGRAMS.items()
+)
+
+st.divider()
+st.header("📦 Download Complete Collection")
+
+st.download_button(
+    label="⬇️ Download All Programs",
+    data=all_programs,
+    file_name="open_source_data_analytics_lab.py",
+    mime="text/x-python",
+    key="download_all"
+)
